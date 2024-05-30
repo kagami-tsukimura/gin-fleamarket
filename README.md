@@ -24,5 +24,16 @@ asdf -v
 ```bash
 asdf plugin add golang https://github.com/asdf-community/asdf-golang.git
 asdf install golang latest
+asdf global golang latest
+asdf current golang
+go version
 asdf plugin list all | grep -e golang
+```
+
+### `Gin` Install
+
+```bash
+asdf plugin add gin https://github.com/asdf-community/asdf-gin.git
+asdf install gin latest
+asdf plugin list all | grep -e gin
 ```
