@@ -36,3 +36,12 @@ asdf plugin list all | grep -e golang
 go get -u github.com/gin-gonic/gin
 asdf plugin list all | grep -e gin
 ```
+
+### `gin-swagger` Install
+
+```bash
+go get -u github.com/swaggo/gin-swagger
+go get -u github.com/swaggo/files
+go get -u github.com/swaggo/swag/cmd/swag
+go install github.com/swaggo/swag/cmd/swag@latest
+```
