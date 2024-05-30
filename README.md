@@ -8,9 +8,12 @@ Go, Gin 環境の構築。
 `asdf`を使用。  
 `Ubuntu22.04`を使用。
 
+### `asdf` Install
+
 ```bash
-asdf plugin add golang
-asdf install golang 1.16.4
-asdf global golang 1.16.4
-``
+apt install curl git
+git clone https://github.com/asdf-vm/asdf.git ~/.asdf --branch v0.13.1
+. "$HOME/.asdf/asdf.sh"
+. "$HOME/.asdf/completions/asdf.bash"
+asdf -v
 ```
