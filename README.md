@@ -33,7 +33,6 @@ asdf plugin list all | grep -e golang
 ### `Gin` Install
 
 ```bash
-asdf plugin add gin https://github.com/asdf-community/asdf-gin.git
-asdf install gin latest
+go get -u github.com/gin-gonic/gin
 asdf plugin list all | grep -e gin
 ```
