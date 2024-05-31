@@ -22,6 +22,7 @@ func NewItemController(service services.IItemService) IItemController {
 func (c *ItemController) FindAll(ctx *gin.Context) {
 	items, err := c.service.FindAll()
 	if err != nil {
+		// http.StatusInternalServerError: 500
 		ctx.JSON(http.StatusInternalServerError, gin.H{"error": "Unexpected error"})
 		// early return
 		return
