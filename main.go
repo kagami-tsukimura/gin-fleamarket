@@ -1,10 +1,16 @@
 package main
 
-import "github.com/gin-gonic/gin"
+import (
+	"github.com/gin-gonic/gin"
+)
 
 func main() {
+	// Ginのルーターを初期化
 	r := gin.Default()
-	r.GET("/ping", func(c *gin.Context) {
+	// path, 無名関数
+	r.GET("/sample", func(c *gin.Context) {
+		// status_code, body
+		// gin.H: map
 		c.JSON(200, gin.H{
 			"message": "pong",
 		})

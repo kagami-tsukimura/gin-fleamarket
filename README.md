@@ -36,3 +36,40 @@ asdf plugin list all | grep -e golang
 go get -u github.com/gin-gonic/gin
 asdf plugin list all | grep -e gin
 ```
+
+### `air` Install
+
+```bash
+go install github.com/cosmtrek/air@latest
+```
+
+```bash
+go env GOPATH
+```
+
+```bash
+vim ~/.bashrc
+```
+
+```bash: .bashrc
+export PATH="<go env GOPATHで確認したパス>/bin:$PATH"
+```
+
+```bash
+source ~/.bashrc
+```
+
+```bash
+air init
+```
+
+- `air init` で `.air.toml`が作成されることを確認。
+
+### `air` によるホットリロードで実行
+
+```bash
+air
+```
+
+- `air` でサーバが実行することを確認。
+- パスを変更して、ホットリロードの反映を確認。
