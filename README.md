@@ -58,3 +58,7 @@ export PATH="<go env GOPATHで確認したパス>/bin:$PATH"
 ```bash
 source ~/.bashrc
 ```
+
+```bash
+air init
+```
