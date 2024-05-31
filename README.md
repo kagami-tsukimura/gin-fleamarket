@@ -46,3 +46,15 @@ go install github.com/cosmtrek/air@latest
 ```bash
 go env GOPATH
 ```
+
+```bash
+vim ~/.bashrc
+```
+
+```bash: .bashrc
+export PATH="<go env GOPATHで確認したパス>/bin:$PATH"
+```
+
+```bash
+source ~/.bashrc
+```
