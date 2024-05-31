@@ -41,4 +41,11 @@ func (c *ItemController) FindById(ctx *gin.Context) {
 		ctx.JSON(http.StatusBadRequest, gin.H{"error": "Invalid item id"})
 		return
 	}
+
+	item, err := c.service.FindById(uint(itemId))
+	if err != nil {
+		if err.Error() == "item not found" {
+			ctx.JSON(http.StatusNotFound, gin.H{"error": err.Error()})
+		}
+	}
 }
