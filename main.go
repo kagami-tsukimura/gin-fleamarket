@@ -12,6 +12,7 @@ func main() {
 		{ID: 2, Name: "商品2", Price: 2000, Description: "説明2", SoldOut: true},
 		{ID: 3, Name: "商品3", Price: 3000, Description: "説明3", SoldOut: false},
 	}
+
 	// Ginのルーターを初期化
 	r := gin.Default()
 	// path, 無名関数
