@@ -42,3 +42,7 @@ asdf plugin list all | grep -e gin
 ```bash
 go install github.com/cosmtrek/air@latest
 ```
+
+```bash
+go env GOPATH
+```
