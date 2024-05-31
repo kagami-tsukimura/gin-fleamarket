@@ -19,5 +19,5 @@ func NewItemService(repository repositories.IItemRepository) IItemService {
 }
 
 func (s *ItemService) FindAll() (*[]models.Item, error) {
-
+	return s.repository.FindAll()
 }
