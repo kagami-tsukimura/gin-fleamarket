@@ -8,7 +8,7 @@ func main() {
 	// Ginのルーターを初期化
 	r := gin.Default()
 	// path, 無名関数
-	r.GET("/sample", func(c *gin.Context) {
+	r.GET("/ping", func(c *gin.Context) {
 		// status_code, body
 		// gin.H: map
 		c.JSON(200, gin.H{
