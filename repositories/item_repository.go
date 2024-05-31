@@ -13,3 +13,7 @@ type ItemMemoryRepository struct {
 func NewItemMemoryRepository(items []models.Item) IItemRepository {
 	return &ItemMemoryRepository{items: items}
 }
+
+func (r *ItemMemoryRepository) FindAll() (*[]models.Item, error) {
+	return &r.items, nil
+}
