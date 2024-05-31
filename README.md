@@ -62,3 +62,5 @@ source ~/.bashrc
 ```bash
 air init
 ```
+
+- `air init` で `.air.toml`が作成されることを確認。
