@@ -11,12 +11,12 @@ type IItemController interface {
 	FindAll(ctx *gin.Context)
 }
 
-type IItemController struct {
+type ItemController struct {
 	service services.IItemService
 }
 
 func NewItemController(service services.IItemService) IItemController {
-	return &IItemController{service: service}
+	return &ItemController{service: service}
 }
 
 func (c *ItemController) FindAll(ctx *gin.Context) {
