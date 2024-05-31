@@ -36,3 +36,9 @@ asdf plugin list all | grep -e golang
 go get -u github.com/gin-gonic/gin
 asdf plugin list all | grep -e gin
 ```
+
+### `air` Install
+
+```bash
+go install github.com/cosmtrek/air@latest
+```
