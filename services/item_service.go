@@ -17,3 +17,7 @@ type ItemService struct {
 func NewItemService(repository repositories.IItemRepository) IItemService {
 	return &ItemService{repository: repository}
 }
+
+func (s *ItemService) FindAll() (*[]models.Item, error) {
+
+}
