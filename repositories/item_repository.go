@@ -105,8 +105,13 @@ func (r *ItemRepository) FindById(itemId uint) (*models.Item, error) {
 }
 
 // Update implements IItemRepository.
-func (i *ItemRepository) Update(updateItem models.Item) (*models.Item, error) {
-	panic("unimplemented")
+func (r *ItemRepository) Update(updateItem models.Item) (*models.Item, error) {
+	// Save: UpOrIns
+	result := r.db.Save(&updateItem)
+	if result.Error != nil {
+		return nil, result.Error
+	}
+	return &updateItem, nil
 }
 
 func NewItemRepository(db *gorm.DB) IItemRepository {
