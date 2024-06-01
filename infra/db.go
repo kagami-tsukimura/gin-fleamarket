@@ -8,6 +8,7 @@ import (
 )
 
 func SetupDB() *gorm.DB {
+	// DBとの接続
 	dsn := fmt.Sprintf(
 		"host=%s user=%s password=%s dbname=%s port=%s sslmode=disable TimeZone=Asia/Tokyo",
 		os.Getenv("DB_HOST"),
