@@ -88,6 +88,12 @@ go get -u gorm.io/driver/sqlite
 go get -u gorm.io/driver/postgres
 ```
 
+### `jwt`トークン生成
+
+```bash
+go get -u github.com/golang-jwt/jwt/v5
+```
+
 ### `pgadmin`接続
 
 ```bash
