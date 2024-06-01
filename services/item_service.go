@@ -11,7 +11,7 @@ type IItemService interface {
 	FindById(itemId uint, userId uint) (*models.Item, error)
 	Create(createItemInput dto.CreateItemInput, userId uint) (*models.Item, error)
 	Update(itemId uint, userId uint, updateItemInput dto.UpdateItemInput) (*models.Item, error)
-	Delete(itemId uint) error
+	Delete(itemId uint, userId uint) error
 }
 
 type ItemService struct {
@@ -64,6 +64,6 @@ func (s *ItemService) Update(itemId uint, userId uint, updateItemInput dto.Updat
 	return s.repository.Update(*targetItem)
 }
 
-func (s *ItemService) Delete(itemId uint) error {
+func (s *ItemService) Delete(itemId uint, userId uint) error {
 	return s.repository.Delete(itemId)
 }
