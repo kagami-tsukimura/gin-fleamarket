@@ -10,6 +10,7 @@ import (
 
 type IAuthController interface {
 	Signup(ctx *gin.Context)
+	Login(ctx *gin.Context)
 }
 
 type AuthController struct {
