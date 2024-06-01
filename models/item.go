@@ -4,8 +4,8 @@ import "gorm.io/gorm"
 
 type Item struct {
 	gorm.Model
-	Name        string
-	Price       uint
+	Name        string `gorm:"not null"`
+	Price       uint   `gorm:"not null"`
 	Description string
-	SoldOut     bool
+	SoldOut     bool `gorm:"not null;default:false"`
 }
