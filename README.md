@@ -74,6 +74,12 @@ air
 - `air` でサーバが実行することを確認。
 - パスを変更して、ホットリロードの反映を確認。
 
+### `godotenv`による環境変数の読み込み
+
+```bash
+go get github.com/joho/godotenv
+```
+
 ### `pgadmin`接続
 
 ```bash
