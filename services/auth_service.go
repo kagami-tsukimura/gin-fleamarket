@@ -79,4 +79,20 @@ func (s *AuthService) GetUserFromToken(tokenString string) (*models.User, error)
 		}
 		return []byte(os.Getenv("SECRET_KEY")), nil
 	})
+	if err != nil {
+		return nil, err
+	}
+
+	var user *models.User
+	// ClaimsがMapClaimsであるか型アサーション
+	if claims, ok := token.Claims.(jwt.MapClaims); ok {
+		if float64(time.Now().Unix()) > claims["exp"].(float64) {
+			return nil, jwt.ErrTokenExpired
+		}
+		user, err = s.repository.FindUser(claims["email"].(string))
+		if err != nil {
+			return nil, err
+		}
+	}
+	return user, nil
 }
