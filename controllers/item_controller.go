@@ -66,6 +66,7 @@ func (c *ItemController) Create(ctx *gin.Context) {
 		return
 	}
 
+	// 型アサーション
 	userId := user.(*models.User).ID
 
 	var input dto.CreateItemInput
