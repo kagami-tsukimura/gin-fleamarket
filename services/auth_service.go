@@ -13,6 +13,7 @@ import (
 type IAuthService interface {
 	Signup(email string, password string) error
 	Login(email string, password string) (*string, error)
+	GetUserFromToken(tokenString string) (*models.User, error)
 }
 
 type AuthService struct {
@@ -55,6 +56,7 @@ func (s *AuthService) Login(email string, password string) (*string, error) {
 }
 
 func CreateToken(userId uint, email string) (*string, error) {
+	// jwt.SigningMethodHS256: jwt.SigningMethodHMACのpointer型
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, jwt.MapClaims{
 		"sub":   userId,
 		"email": email,
@@ -66,4 +68,13 @@ func CreateToken(userId uint, email string) (*string, error) {
 		return nil, err
 	}
 	return &tokenString, nil
+}
+
+func (s *AuthService) GetUserFromToken(tokenString string) (*models.User, error) {
+	token, err := jwt.Parse(tokenString, func(token *jwt.Token) (interface{}, error) {
+		// *jwt.SigningMethodHMAC: 型アサーション
+		if _, ok := token.Method.(*jwt.SigningMethodHMAC); !ok {
+
+		}
+	})
 }
