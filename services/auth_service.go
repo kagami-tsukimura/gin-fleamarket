@@ -3,6 +3,7 @@ package services
 import (
 	"gin-fleamarket/models"
 	"gin-fleamarket/repositories"
+	"os"
 	"time"
 
 	"github.com/golang-jwt/jwt/v5"
@@ -54,4 +55,10 @@ func CreateToken(userId uint, email string) (*string, error) {
 		"email": email,
 		"exp":   time.Now().Add(time.Hour).Unix(),
 	})
+
+	tokenString, err := token.SignedString([]byte(os.Getenv("SECRET_KEY")))
+	if err != nil {
+		return nil, err
+	}
+	return &tokenString, nil
 }
