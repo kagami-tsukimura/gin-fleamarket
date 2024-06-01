@@ -105,7 +105,7 @@ func (r *ItemRepository) FindAll() (*[]models.Item, error) {
 // FindById implements IItemRepository.
 func (r *ItemRepository) FindById(itemId uint, userId uint) (*models.Item, error) {
 	var item models.Item
-	result := r.db.First(&item, itemId)
+	result := r.db.First(&item, "id = ? AND user_id = ?", itemId, userId)
 	if result.Error != nil {
 		if result.Error.Error() == "record not found" {
 			return nil, errors.New("item not found")
