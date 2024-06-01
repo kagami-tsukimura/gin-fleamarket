@@ -74,6 +74,20 @@ air
 - `air` でサーバが実行することを確認。
 - パスを変更して、ホットリロードの反映を確認。
 
+### `godotenv`による環境変数の読み込み
+
+```bash
+go get github.com/joho/godotenv
+```
+
+### `GORM`による ORM の使用
+
+```bash
+go get -u gorm.io/gorm
+go get -u gorm.io/driver/sqlite
+go get -u gorm.io/driver/postgres
+```
+
 ### `pgadmin`接続
 
 ```bash
