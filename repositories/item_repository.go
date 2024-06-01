@@ -49,7 +49,7 @@ func (r *ItemMemoryRepository) Update(updateItem models.Item) (*models.Item, err
 			return &r.items[i], nil
 		}
 	}
-	return nil, errors.New("Unexpected error")
+	return nil, errors.New("unexpected error")
 }
 
 func (r *ItemMemoryRepository) Delete(itemId uint) error {
@@ -82,8 +82,13 @@ func (i *ItemRepository) Delete(itemId uint) error {
 }
 
 // FindAll implements IItemRepository.
-func (i *ItemRepository) FindAll() (*[]models.Item, error) {
-	panic("unimplemented")
+func (r *ItemRepository) FindAll() (*[]models.Item, error) {
+	var items []models.Item
+	result := r.db.Find(&items)
+	if result.Error != nil {
+		return nil, result.Error
+	}
+	return &items, nil
 }
 
 // FindById implements IItemRepository.
