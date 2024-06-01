@@ -46,6 +46,8 @@ func (c *ItemController) FindById(ctx *gin.Context) {
 	if err != nil {
 		if err.Error() == "item not found" {
 			ctx.JSON(http.StatusNotFound, gin.H{"error": err.Error()})
+			return
 		}
+		ctx.JSON(http.StatusInternalServerError, gin.H{"error": "Unexpected error"})
 	}
 }
