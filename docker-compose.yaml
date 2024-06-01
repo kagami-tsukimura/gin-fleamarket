@@ -1,4 +1,4 @@
-version: "3.8"
+version: '3.8'
 services:
   postgres:
     image: postgres:16-alpine
@@ -11,7 +11,7 @@ services:
     environment:
       POSTGRES_USER: ginuser
       POSTGRES_PASSWORD: ginpassword
-      POSTGRES_INITDB_ARGS: "--encoding=UTF-8"
+      POSTGRES_INITDB_ARGS: '--encoding=UTF-8'
       POSTGRES_DB: fleamarket
     hostname: postgres
     restart: always
@@ -27,5 +27,6 @@ services:
       PGADMIN_DEFAULT_PASSWORD: ginpassword
     volumes:
       - ./docker/pgadmin:/var/lib/pgadmin
+    user: root
     depends_on:
       - postgres
