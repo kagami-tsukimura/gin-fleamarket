@@ -1,6 +1,7 @@
 package services
 
 import (
+	"fmt"
 	"gin-fleamarket/models"
 	"gin-fleamarket/repositories"
 	"os"
@@ -74,7 +75,7 @@ func (s *AuthService) GetUserFromToken(tokenString string) (*models.User, error)
 	token, err := jwt.Parse(tokenString, func(token *jwt.Token) (interface{}, error) {
 		// *jwt.SigningMethodHMAC: 型アサーション
 		if _, ok := token.Method.(*jwt.SigningMethodHMAC); !ok {
-
+			return nil, fmt.Errorf("unexpected signing method: %v", token.Header["alg"])
 		}
 	})
 }
