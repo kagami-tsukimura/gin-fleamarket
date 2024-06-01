@@ -26,4 +26,15 @@ func setupTestData(db *gorm.DB) {
 		{Name: "テストアイテム2", Price: 2000, Description: "テスト2", SoldOut: true, UserID: 1},
 		{Name: "テストアイテム3", Price: 3000, Description: "テスト3", SoldOut: false, UserID: 2},
 	}
+	users := []models.User{
+		{Email: "test1@example.com", Password: "test1pass"},
+		{Email: "test2@example.com", Password: "test2pass"},
+	}
+
+	for _, user := range users {
+		db.Create(&user)
+	}
+	for _, item := range items {
+		db.Create(&item)
+	}
 }
