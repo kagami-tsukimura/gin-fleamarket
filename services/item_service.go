@@ -58,4 +58,6 @@ func (s *ItemService) Update(itemId uint, updateItemInput dto.UpdateItemInput) (
 	if updateItemInput.SoldOut != nil {
 		targetItem.SoldOut = *updateItemInput.SoldOut
 	}
+
+	return s.repository.Update(*targetItem)
 }
