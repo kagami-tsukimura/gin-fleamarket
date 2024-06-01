@@ -9,7 +9,7 @@ import (
 
 type IItemRepository interface {
 	FindAll() (*[]models.Item, error)
-	FindById(itemId uint) (*models.Item, error)
+	FindById(itemId uint, userId uint) (*models.Item, error)
 	Create(newItem models.Item) (*models.Item, error)
 	Update(updateItem models.Item) (*models.Item, error)
 	Delete(itemId uint) error
@@ -27,7 +27,7 @@ func (r *ItemMemoryRepository) FindAll() (*[]models.Item, error) {
 	return &r.items, nil
 }
 
-func (r *ItemMemoryRepository) FindById(itemId uint) (*models.Item, error) {
+func (r *ItemMemoryRepository) FindById(itemId uint, userId uint) (*models.Item, error) {
 	for _, item := range r.items {
 		if item.ID == itemId {
 			return &item, nil
@@ -103,7 +103,7 @@ func (r *ItemRepository) FindAll() (*[]models.Item, error) {
 }
 
 // FindById implements IItemRepository.
-func (r *ItemRepository) FindById(itemId uint) (*models.Item, error) {
+func (r *ItemRepository) FindById(itemId uint, userId uint) (*models.Item, error) {
 	var item models.Item
 	result := r.db.First(&item, itemId)
 	if result.Error != nil {

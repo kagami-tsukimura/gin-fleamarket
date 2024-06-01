@@ -39,6 +39,15 @@ func (c *ItemController) FindAll(ctx *gin.Context) {
 }
 
 func (c *ItemController) FindById(ctx *gin.Context) {
+	user, exists := ctx.Get("user")
+	if !exists {
+		ctx.AbortWithStatus(http.StatusUnauthorized)
+		return
+	}
+
+	// 型アサーション
+	userId := user.(*models.User).ID
+
 	// パスパラメータの値を取得
 	// NOTE: パスパラメータはstring型で取得されるため、int型にキャスト
 	itemId, err := strconv.ParseUint(ctx.Param("id"), 10, 64)
@@ -47,7 +56,7 @@ func (c *ItemController) FindById(ctx *gin.Context) {
 		return
 	}
 
-	item, err := c.service.FindById(uint(itemId))
+	item, err := c.service.FindById(uint(itemId), userId)
 	if err != nil {
 		if err.Error() == "item not found" {
 			ctx.JSON(http.StatusNotFound, gin.H{"error": err.Error()})

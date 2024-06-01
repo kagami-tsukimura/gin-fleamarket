@@ -8,7 +8,7 @@ import (
 
 type IItemService interface {
 	FindAll() (*[]models.Item, error)
-	FindById(itemId uint) (*models.Item, error)
+	FindById(itemId uint, userId uint) (*models.Item, error)
 	Create(createItemInput dto.CreateItemInput, userId uint) (*models.Item, error)
 	Update(itemId uint, updateItemInput dto.UpdateItemInput) (*models.Item, error)
 	Delete(itemId uint) error
@@ -27,8 +27,8 @@ func (s *ItemService) FindAll() (*[]models.Item, error) {
 	return s.repository.FindAll()
 }
 
-func (s *ItemService) FindById(itemId uint) (*models.Item, error) {
-	return s.repository.FindById(itemId)
+func (s *ItemService) FindById(itemId uint, userId uint) (*models.Item, error) {
+	return s.repository.FindById(itemId, userId)
 }
 
 func (s *ItemService) Create(createItemInput dto.CreateItemInput, userId uint) (*models.Item, error) {
