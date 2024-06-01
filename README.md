@@ -107,3 +107,9 @@ docker-compose up -d
     - 管理用データベース: fleamarket
     - ユーザー名: ginuser
     - パスワード: ginpassword
+
+### DB Migration
+
+```bash
+go run migratinos/migration.go
+```
