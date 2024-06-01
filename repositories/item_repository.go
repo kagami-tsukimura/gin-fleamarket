@@ -12,7 +12,7 @@ type IItemRepository interface {
 	FindById(itemId uint, userId uint) (*models.Item, error)
 	Create(newItem models.Item) (*models.Item, error)
 	Update(updateItem models.Item) (*models.Item, error)
-	Delete(itemId uint) error
+	Delete(itemId uint, userId uint) error
 }
 
 type ItemMemoryRepository struct {
@@ -77,8 +77,8 @@ func (r *ItemRepository) Create(newItem models.Item) (*models.Item, error) {
 }
 
 // Delete implements IItemRepository.
-func (r *ItemRepository) Delete(itemId uint) error {
-	deleteItem, err := r.FindById(itemId)
+func (r *ItemRepository) Delete(itemId uint, userId uint) error {
+	deleteItem, err := r.FindById(itemId, userId)
 	if err != nil {
 		return err
 	}

@@ -65,5 +65,5 @@ func (s *ItemService) Update(itemId uint, userId uint, updateItemInput dto.Updat
 }
 
 func (s *ItemService) Delete(itemId uint, userId uint) error {
-	return s.repository.Delete(itemId)
+	return s.repository.Delete(itemId, userId)
 }
