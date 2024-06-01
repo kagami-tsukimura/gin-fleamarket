@@ -52,7 +52,7 @@ func (r *ItemMemoryRepository) Update(updateItem models.Item) (*models.Item, err
 	return nil, errors.New("unexpected error")
 }
 
-func (r *ItemMemoryRepository) Delete(itemId uint) error {
+func (r *ItemMemoryRepository) Delete(itemId uint, userId uint) error {
 	for i, item := range r.items {
 		if item.ID == itemId {
 			// index[i]のみを取り除く
