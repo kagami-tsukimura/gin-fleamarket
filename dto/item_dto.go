@@ -13,11 +13,3 @@ type UpdateItemInput struct {
 	Price       uint   `json:"price" binding:"required,min=1,max=999999"`
 	Description string `json:"description"`
 }
-
-type ItemResponse struct {
-	ID          uint   `json:"id"`
-	Name        string `json:"name"`
-	Price       uint   `json:"price"`
-	Description string `json:"description"`
-	SoldOut     bool   `json:"sold_out"`
-}
