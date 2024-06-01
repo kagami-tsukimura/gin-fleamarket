@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"os"
 
+	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
 )
 
@@ -17,4 +18,11 @@ func SetupDB() *gorm.DB {
 		os.Getenv("DB_NAME"),
 		os.Getenv("DB_PORT"),
 	)
+
+	db, err := gorm.Open(postgres.Open(dsn), &gorm.Config{})
+
+	if err != nil {
+		panic("Failed to connect database")
+	}
+	return db
 }
