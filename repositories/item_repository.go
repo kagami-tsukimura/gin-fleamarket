@@ -68,8 +68,12 @@ type ItemRepository struct {
 }
 
 // Create implements IItemRepository.
-func (i *ItemRepository) Create(newItem models.Item) (*models.Item, error) {
-	panic("unimplemented")
+func (r *ItemRepository) Create(newItem models.Item) (*models.Item, error) {
+	result := r.db.Create(&newItem)
+	if result.Error != nil {
+		return nil, result.Error
+	}
+	return &newItem, nil
 }
 
 // Delete implements IItemRepository.
