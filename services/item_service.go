@@ -10,7 +10,7 @@ type IItemService interface {
 	FindAll() (*[]models.Item, error)
 	FindById(itemId uint, userId uint) (*models.Item, error)
 	Create(createItemInput dto.CreateItemInput, userId uint) (*models.Item, error)
-	Update(itemId uint, updateItemInput dto.UpdateItemInput) (*models.Item, error)
+	Update(itemId uint, userId uint, updateItemInput dto.UpdateItemInput) (*models.Item, error)
 	Delete(itemId uint) error
 }
 
@@ -42,8 +42,8 @@ func (s *ItemService) Create(createItemInput dto.CreateItemInput, userId uint) (
 	return s.repository.Create(newItem)
 }
 
-func (s *ItemService) Update(itemId uint, updateItemInput dto.UpdateItemInput) (*models.Item, error) {
-	targetItem, err := s.FindById(itemId)
+func (s *ItemService) Update(itemId uint, userId uint, updateItemInput dto.UpdateItemInput) (*models.Item, error) {
+	targetItem, err := s.FindById(itemId, userId)
 	if err != nil {
 		return nil, err
 	}
