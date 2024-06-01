@@ -82,6 +82,9 @@ func (r *ItemRepository) Delete(itemId uint) error {
 	if err != nil {
 		return err
 	}
+	// // 物理削除
+	// result := r.db.Unscoped().Delete(&deleteItem, itemId)
+	// 論理削除
 	result := r.db.Delete(&deleteItem, itemId)
 	if result.Error != nil {
 		return result.Error
