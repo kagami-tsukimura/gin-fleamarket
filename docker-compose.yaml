@@ -14,12 +14,9 @@ services:
       POSTGRES_INITDB_ARGS: '--encoding=UTF-8'
       POSTGRES_DB: fleamarket
     hostname: postgres
-    restart: always
-    # user: root # Comment this line out
 
   pgadmin:
     image: dpage/pgadmin4
-    restart: always
     ports:
       - 81:80
     environment:
@@ -27,6 +24,5 @@ services:
       PGADMIN_DEFAULT_PASSWORD: ginpassword
     volumes:
       - ./docker/pgadmin:/var/lib/pgadmin
-    # user: root
     depends_on:
       - postgres

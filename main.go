@@ -24,8 +24,8 @@ func main() {
 
 	// itemRepository := repositories.NewItemMemoryRepository(items)
 	itemRepository := repositories.NewItemRepository(db)
-	ItemService := services.NewItemService(itemRepository)
-	itemController := controllers.NewItemController(ItemService)
+	itemService := services.NewItemService(itemRepository)
+	itemController := controllers.NewItemController(itemService)
 
 	authRepository := repositories.NewAuthRepository(db)
 	authService := services.NewAuthService(authRepository)
