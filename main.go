@@ -14,7 +14,7 @@ import (
 	"gorm.io/gorm"
 )
 
-func serupRouter(db *gorm.DB) *gin.Engine {
+func setupRouter(db *gorm.DB) *gin.Engine {
 	// itemRepository := repositories.NewItemMemoryRepository(items)
 	itemRepository := repositories.NewItemRepository(db)
 	itemService := services.NewItemService(itemRepository)
@@ -52,7 +52,7 @@ func main() {
 	// 	{ID: 3, Name: "商品3", Price: 3000, Description: "説明3", SoldOut: false},
 	// }
 
-	r := serupRouter(db)
+	r := setupRouter(db)
 
 	r.Run("localhost:8080") // default: 0.0.0.0:8080 でサーバーを立てます。
 }

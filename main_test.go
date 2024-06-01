@@ -1,11 +1,13 @@
 package main
 
 import (
+	"gin-fleamarket/infra"
 	"gin-fleamarket/models"
 	"log"
 	"os"
 	"testing"
 
+	"github.com/gin-gonic/gin"
 	"github.com/joho/godotenv"
 	"gorm.io/gorm"
 )
@@ -37,4 +39,13 @@ func setupTestData(db *gorm.DB) {
 	for _, item := range items {
 		db.Create(&item)
 	}
+}
+
+func setup() *gin.Engine {
+	db := infra.SetupDB()
+	db.AutoMigrate(&models.Item{}, &models.User{})
+	setupTestData(db)
+	router := setupRouter(db)
+
+	return router
 }
