@@ -73,3 +73,23 @@ air
 
 - `air` でサーバが実行することを確認。
 - パスを変更して、ホットリロードの反映を確認。
+
+### `pgadmin`接続
+
+```bash
+docker-compose up -d
+```
+
+- `pgadmin` にログイン。
+
+  - email: gin@example.com
+  - password: ginpassword
+
+- `pgadmin` で DB にアクセス。
+  - General タブ
+    - 名前: fleamarket
+  - 接続タブ
+    - ホスト名/アドレス: postgres
+    - 管理用データベース: fleamarket
+    - ユーザー名: ginuser
+    - パスワード: ginpassword
