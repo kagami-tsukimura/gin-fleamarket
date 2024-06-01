@@ -8,7 +8,9 @@ type CreateItemInput struct {
 }
 
 type UpdateItemInput struct {
-	Name        string `json:"name" binding:"required,min=2"`
-	Price       uint   `json:"price" binding:"required,min=1,max=999999"`
-	Description string `json:"description"`
+	// pointer型: nil許容
+	Name        *string `json:"name" binding:"required,min=2"`
+	Price       *uint   `json:"price" binding:"required,min=1,max=999999"`
+	Description *string `json:"description"`
+	SoldOut     *bool
 }
