@@ -15,7 +15,7 @@ services:
       POSTGRES_DB: fleamarket
     hostname: postgres
     restart: always
-    user: root
+    # user: root # Comment this line out
 
   pgadmin:
     image: dpage/pgadmin4
@@ -27,6 +27,6 @@ services:
       PGADMIN_DEFAULT_PASSWORD: ginpassword
     volumes:
       - ./docker/pgadmin:/var/lib/pgadmin
-    user: root
+    # user: root
     depends_on:
       - postgres

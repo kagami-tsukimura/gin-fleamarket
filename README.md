@@ -94,6 +94,12 @@ go get -u gorm.io/driver/postgres
 go get -u github.com/golang-jwt/jwt/v5
 ```
 
+### `cors`設定
+
+```bash
+go get github.com/gin-contrib/cors
+```
+
 ### `pgadmin`接続
 
 ```bash
