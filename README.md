@@ -125,3 +125,9 @@ docker-compose up -d
 ```bash
 go run migratinos/migration.go
 ```
+
+### Test 実行
+
+```bash
+go get github.com/stretchr/testify
+```
