@@ -204,3 +204,182 @@ func TestDelete(t *testing.T) {
 	// assertion
 	assert.Equal(t, http.StatusOK, w.Code)
 }
+
+func TestCreateUnauthorized(t *testing.T) {
+	// テストのセットアップ
+	router := setup()
+
+	// ↓↓↓リクエストボディ↓↓↓
+	createItemInput := dto.CreateItemInput{
+		Name:        "テストアイテム4",
+		Price:       4000,
+		Description: "Create Test",
+	}
+	// json encode
+	reqBody, _ := json.Marshal(createItemInput)
+	// ↑↑↑リクエストボディ↑↑↑
+
+	w := httptest.NewRecorder()
+	// Request, Path, Body
+	req, _ := http.NewRequest("POST", "/items", bytes.NewBuffer(reqBody))
+
+	// テストの実行
+	router.ServeHTTP(w, req)
+	// レスポンスの検証
+	var res map[string]models.Item
+	json.Unmarshal(w.Body.Bytes(), &res)
+	// assertion
+	assert.Equal(t, http.StatusUnauthorized, w.Code)
+}
+
+func TestFindByIdUnAuthorized(t *testing.T) {
+	// テストのセットアップ
+	router := setup()
+
+	w := httptest.NewRecorder()
+	// Request, Path, Body
+	req, _ := http.NewRequest("GET", "/items/1", nil)
+
+	// テストの実行
+	router.ServeHTTP(w, req)
+	// レスポンスの検証
+	var res map[string]models.Item
+	json.Unmarshal(w.Body.Bytes(), &res)
+	// assertion
+	assert.Equal(t, http.StatusUnauthorized, w.Code)
+}
+
+func TestUpdateUnauthorized(t *testing.T) {
+	// テストのセットアップ
+	router := setup()
+
+	// ↓↓↓リクエストボディ↓↓↓
+	createItemInput := dto.CreateItemInput{
+		Name:        "アップデートアイテム2",
+		Price:       2222,
+		Description: "Update Test",
+	}
+	// json encode
+	reqBody, _ := json.Marshal(createItemInput)
+	// ↑↑↑リクエストボディ↑↑↑
+
+	w := httptest.NewRecorder()
+	// Request, Path, Body
+	req, _ := http.NewRequest("PUT", "/items/2", bytes.NewBuffer(reqBody))
+
+	// テストの実行
+	router.ServeHTTP(w, req)
+	// レスポンスの検証
+	var res map[string]models.Item
+	json.Unmarshal(w.Body.Bytes(), &res)
+	// assertion
+	assert.Equal(t, http.StatusUnauthorized, w.Code)
+}
+
+func TestDeleteUnauthorized(t *testing.T) {
+	// テストのセットアップ
+	router := setup()
+
+	w := httptest.NewRecorder()
+	// Request, Path, Body
+	req, _ := http.NewRequest("DELETE", "/items/3", nil)
+
+	// テストの実行
+	router.ServeHTTP(w, req)
+	// レスポンスの検証
+	var res map[string]models.Item
+	json.Unmarshal(w.Body.Bytes(), &res)
+	// assertion
+	assert.Equal(t, http.StatusUnauthorized, w.Code)
+}
+
+func TestFindByIdNotFound(t *testing.T) {
+	// テストのセットアップ
+	router := setup()
+
+	// ↓↓↓認証処理↓↓↓
+	// 認証
+	token, err := services.CreateToken(1, "test1@example.com")
+	// エラー確認
+	assert.Equal(t, nil, err)
+	// ↑↑↑認証処理↑↑↑
+
+	w := httptest.NewRecorder()
+	// Request, Path, Body
+	req, _ := http.NewRequest("GET", "/items/11", nil)
+	// ↓↓↓認証処理↓↓↓
+	req.Header.Set("Authorization", "Bearer "+*token)
+	// ↑↑↑認証処理↑↑↑
+
+	// テストの実行
+	router.ServeHTTP(w, req)
+	// レスポンスの検証
+	var res map[string]models.Item
+	json.Unmarshal(w.Body.Bytes(), &res)
+	// assertion
+	assert.Equal(t, http.StatusNotFound, w.Code)
+}
+
+func TestUpdateNotFound(t *testing.T) {
+	// テストのセットアップ
+	router := setup()
+
+	// ↓↓↓認証処理↓↓↓
+	// 認証
+	token, err := services.CreateToken(1, "test1@example.com")
+	// エラー確認
+	assert.Equal(t, nil, err)
+	// ↑↑↑認証処理↑↑↑
+
+	// ↓↓↓リクエストボディ↓↓↓
+	createItemInput := dto.CreateItemInput{
+		Name:        "アップデートアイテム2",
+		Price:       2222,
+		Description: "Update Test",
+	}
+	// json encode
+	reqBody, _ := json.Marshal(createItemInput)
+	// ↑↑↑リクエストボディ↑↑↑
+
+	w := httptest.NewRecorder()
+	// Request, Path, Body
+	req, _ := http.NewRequest("PUT", "/items/22", bytes.NewBuffer(reqBody))
+	// ↓↓↓認証処理↓↓↓
+	req.Header.Set("Authorization", "Bearer "+*token)
+	// ↑↑↑認証処理↑↑↑
+
+	// テストの実行
+	router.ServeHTTP(w, req)
+	// レスポンスの検証
+	var res map[string]models.Item
+	json.Unmarshal(w.Body.Bytes(), &res)
+	// assertion
+	assert.Equal(t, http.StatusNotFound, w.Code)
+}
+
+func TestDeleteNotFound(t *testing.T) {
+	// テストのセットアップ
+	router := setup()
+
+	// ↓↓↓認証処理↓↓↓
+	// 認証
+	token, err := services.CreateToken(2, "test2@example.com")
+	// エラー確認
+	assert.Equal(t, nil, err)
+	// ↑↑↑認証処理↑↑↑
+
+	w := httptest.NewRecorder()
+	// Request, Path, Body
+	req, _ := http.NewRequest("DELETE", "/items/33", nil)
+	// ↓↓↓認証処理↓↓↓
+	req.Header.Set("Authorization", "Bearer "+*token)
+	// ↑↑↑認証処理↑↑↑
+
+	// テストの実行
+	router.ServeHTTP(w, req)
+	// レスポンスの検証
+	var res map[string]models.Item
+	json.Unmarshal(w.Body.Bytes(), &res)
+	// assertion
+	assert.Equal(t, http.StatusNotFound, w.Code)
+}
