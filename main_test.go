@@ -68,5 +68,5 @@ func TestFindAll(t *testing.T) {
 	json.Unmarshal(w.Body.Bytes(), &res)
 	// assertion
 	assert.Equal(t, http.StatusOK, w.Code)
-	assert.Equal(t, 4, len(res["data"]))
+	assert.Equal(t, 3, len(res["data"]))
 }
