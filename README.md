@@ -112,6 +112,7 @@ docker-compose up -d
   - password: ginpassword
 
 - `pgadmin` で DB にアクセス。
+
   - General タブ
     - 名前: fleamarket
   - 接続タブ
@@ -120,8 +121,30 @@ docker-compose up -d
     - ユーザー名: ginuser
     - パスワード: ginpassword
 
+- `permission denied`が発生する場合、権限を UID:PID に変更する。
+
+```bash
+sudo chown -R $(whoami):$(whoami) docker/
+```
+
 ### DB Migration
 
 ```bash
 go run migratinos/migration.go
+```
+
+### Test 実行
+
+```bash
+go get github.com/stretchr/testify
+```
+
+```bash
+go test ./...
+```
+
+- `permission denied`が発生する場合、権限を UID:PID に変更する。
+
+```bash
+sudo chown -R $(whoami):$(whoami) docker/pgadmin/storage/gin_example.com
 ```
