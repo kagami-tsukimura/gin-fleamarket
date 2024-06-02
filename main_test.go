@@ -204,3 +204,30 @@ func TestDelete(t *testing.T) {
 	// assertion
 	assert.Equal(t, http.StatusOK, w.Code)
 }
+
+func TestCreateUnauthorized(t *testing.T) {
+	// テストのセットアップ
+	router := setup()
+
+	// ↓↓↓リクエストボディ↓↓↓
+	createItemInput := dto.CreateItemInput{
+		Name:        "テストアイテム4",
+		Price:       4000,
+		Description: "Create Test",
+	}
+	// json encode
+	reqBody, _ := json.Marshal(createItemInput)
+	// ↑↑↑リクエストボディ↑↑↑
+
+	w := httptest.NewRecorder()
+	// Request, Path, Body
+	req, _ := http.NewRequest("POST", "/items", bytes.NewBuffer(reqBody))
+
+	// テストの実行
+	router.ServeHTTP(w, req)
+	// レスポンスの検証
+	var res map[string]models.Item
+	json.Unmarshal(w.Body.Bytes(), &res)
+	// assertion
+	assert.Equal(t, http.StatusUnauthorized, w.Code)
+}
