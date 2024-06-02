@@ -135,3 +135,9 @@ go get github.com/stretchr/testify
 ```bash
 go test ./...
 ```
+
+- `permission denied`が発生する場合、権限を UID:PID に変更する。
+
+```bash
+sudo chown -R $(whoami):$(whoami) docker/pgadmin/storage/gin_example.com
+```
