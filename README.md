@@ -112,6 +112,7 @@ docker-compose up -d
   - password: ginpassword
 
 - `pgadmin` で DB にアクセス。
+
   - General タブ
     - 名前: fleamarket
   - 接続タブ
@@ -119,6 +120,12 @@ docker-compose up -d
     - 管理用データベース: fleamarket
     - ユーザー名: ginuser
     - パスワード: ginpassword
+
+- `permission denied`が発生する場合、権限を UID:PID に変更する。
+
+```bash
+sudo chown -R $(whoami):$(whoami) docker/
+```
 
 ### DB Migration
 
