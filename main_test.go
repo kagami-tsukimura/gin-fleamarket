@@ -65,7 +65,7 @@ func TestFindAll(t *testing.T) {
 	router.ServeHTTP(w, req)
 	// レスポンスの検証
 	var res map[string][]models.Item
-	json.Unmarshal([]byte(w.Body.String()), &res)
+	json.Unmarshal(w.Body.Bytes(), &res)
 	// assertion
 	assert.Equal(t, http.StatusOK, w.Code)
 	assert.Equal(t, 3, len(res["data"]))
