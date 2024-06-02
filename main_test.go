@@ -106,19 +106,25 @@ func TestCreate(t *testing.T) {
 	assert.Equal(t, uint(4), res["data"].ID)
 }
 
-// func TestFindById(t *testing.T) {
-// 	// テストのセットアップ
-// 	router := setup()
+func TestFindById(t *testing.T) {
+	// テストのセットアップ
+	router := setup()
 
-// 	w := httptest.NewRecorder()
-// 	// Request, Path, Body
-// 	req, _ := http.NewRequest("GET", "/items/1", nil)
-// 	// テストの実行
-// 	router.ServeHTTP(w, req)
-// 	// レスポンスの検証
-// 	var res map[string][]models.Item
-// 	json.Unmarshal(w.Body.Bytes(), &res)
-// 	// assertion
-// 	assert.Equal(t, http.StatusUnauthorized, w.Code)
-// 	assert.Equal(t, 0, len(res["data"]))
-// }
+	// 認証
+	token, err := services.CreateToken(1, "test1@example.com")
+	// エラー確認
+	assert.Equal(t, nil, err)
+
+	w := httptest.NewRecorder()
+	// Request, Path, Body
+	req, _ := http.NewRequest("GET", "/items/1", nil)
+	req.Header.Set("Authorization", "Bearer "+*token)
+	// テストの実行
+	router.ServeHTTP(w, req)
+	// レスポンスの検証
+	var res map[string]models.Item
+	json.Unmarshal(w.Body.Bytes(), &res)
+	// assertion
+	assert.Equal(t, http.StatusOK, w.Code)
+	assert.Equal(t, uint(1), res["data"].ID)
+}
