@@ -231,3 +231,64 @@ func TestCreateUnauthorized(t *testing.T) {
 	// assertion
 	assert.Equal(t, http.StatusUnauthorized, w.Code)
 }
+
+func TestFindByIdUnAuthorized(t *testing.T) {
+	// テストのセットアップ
+	router := setup()
+
+	w := httptest.NewRecorder()
+	// Request, Path, Body
+	req, _ := http.NewRequest("GET", "/items/1", nil)
+
+	// テストの実行
+	router.ServeHTTP(w, req)
+	// レスポンスの検証
+	var res map[string]models.Item
+	json.Unmarshal(w.Body.Bytes(), &res)
+	// assertion
+	assert.Equal(t, http.StatusUnauthorized, w.Code)
+}
+
+func TestUpdateUnauthorized(t *testing.T) {
+	// テストのセットアップ
+	router := setup()
+
+	// ↓↓↓リクエストボディ↓↓↓
+	createItemInput := dto.CreateItemInput{
+		Name:        "アップデートアイテム2",
+		Price:       2222,
+		Description: "Update Test",
+	}
+	// json encode
+	reqBody, _ := json.Marshal(createItemInput)
+	// ↑↑↑リクエストボディ↑↑↑
+
+	w := httptest.NewRecorder()
+	// Request, Path, Body
+	req, _ := http.NewRequest("PUT", "/items/2", bytes.NewBuffer(reqBody))
+
+	// テストの実行
+	router.ServeHTTP(w, req)
+	// レスポンスの検証
+	var res map[string]models.Item
+	json.Unmarshal(w.Body.Bytes(), &res)
+	// assertion
+	assert.Equal(t, http.StatusUnauthorized, w.Code)
+}
+
+func TestDeleteUnauthorized(t *testing.T) {
+	// テストのセットアップ
+	router := setup()
+
+	w := httptest.NewRecorder()
+	// Request, Path, Body
+	req, _ := http.NewRequest("DELETE", "/items/3", nil)
+
+	// テストの実行
+	router.ServeHTTP(w, req)
+	// レスポンスの検証
+	var res map[string]models.Item
+	json.Unmarshal(w.Body.Bytes(), &res)
+	// assertion
+	assert.Equal(t, http.StatusUnauthorized, w.Code)
+}
