@@ -131,3 +131,7 @@ go run migratinos/migration.go
 ```bash
 go get github.com/stretchr/testify
 ```
+
+```bash
+go test ./...
+```
