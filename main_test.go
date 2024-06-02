@@ -1,9 +1,12 @@
 package main
 
 import (
+	"bytes"
 	"encoding/json"
+	"gin-fleamarket/dto"
 	"gin-fleamarket/infra"
 	"gin-fleamarket/models"
+	"gin-fleamarket/services"
 	"log"
 	"net/http"
 	"net/http/httptest"
@@ -69,4 +72,135 @@ func TestFindAll(t *testing.T) {
 	// assertion
 	assert.Equal(t, http.StatusOK, w.Code)
 	assert.Equal(t, 3, len(res["data"]))
+}
+
+func TestCreate(t *testing.T) {
+	// テストのセットアップ
+	router := setup()
+
+	// ↓↓↓認証処理↓↓↓
+	// 認証
+	token, err := services.CreateToken(1, "test1@example.com")
+	// エラー確認
+	assert.Equal(t, nil, err)
+	// ↑↑↑認証処理↑↑↑
+
+	// ↓↓↓リクエストボディ↓↓↓
+	createItemInput := dto.CreateItemInput{
+		Name:        "テストアイテム4",
+		Price:       4000,
+		Description: "Create Test",
+	}
+	// json encode
+	reqBody, _ := json.Marshal(createItemInput)
+	// ↑↑↑リクエストボディ↑↑↑
+
+	w := httptest.NewRecorder()
+	// Request, Path, Body
+	req, _ := http.NewRequest("POST", "/items", bytes.NewBuffer(reqBody))
+	// ↓↓↓認証処理↓↓↓
+	req.Header.Set("Authorization", "Bearer "+*token)
+	// ↑↑↑認証処理↑↑↑
+
+	// テストの実行
+	router.ServeHTTP(w, req)
+	// レスポンスの検証
+	var res map[string]models.Item
+	json.Unmarshal(w.Body.Bytes(), &res)
+	// assertion
+	assert.Equal(t, http.StatusCreated, w.Code)
+	assert.Equal(t, uint(4), res["data"].ID)
+}
+
+func TestFindById(t *testing.T) {
+	// テストのセットアップ
+	router := setup()
+
+	// ↓↓↓認証処理↓↓↓
+	// 認証
+	token, err := services.CreateToken(1, "test1@example.com")
+	// エラー確認
+	assert.Equal(t, nil, err)
+	// ↑↑↑認証処理↑↑↑
+
+	w := httptest.NewRecorder()
+	// Request, Path, Body
+	req, _ := http.NewRequest("GET", "/items/1", nil)
+	// ↓↓↓認証処理↓↓↓
+	req.Header.Set("Authorization", "Bearer "+*token)
+	// ↑↑↑認証処理↑↑↑
+
+	// テストの実行
+	router.ServeHTTP(w, req)
+	// レスポンスの検証
+	var res map[string]models.Item
+	json.Unmarshal(w.Body.Bytes(), &res)
+	// assertion
+	assert.Equal(t, http.StatusOK, w.Code)
+	assert.Equal(t, uint(1), res["data"].ID)
+}
+
+func TestUpdate(t *testing.T) {
+	// テストのセットアップ
+	router := setup()
+
+	// ↓↓↓認証処理↓↓↓
+	// 認証
+	token, err := services.CreateToken(1, "test1@example.com")
+	// エラー確認
+	assert.Equal(t, nil, err)
+	// ↑↑↑認証処理↑↑↑
+
+	// ↓↓↓リクエストボディ↓↓↓
+	createItemInput := dto.CreateItemInput{
+		Name:        "アップデートアイテム2",
+		Price:       2222,
+		Description: "Update Test",
+	}
+	// json encode
+	reqBody, _ := json.Marshal(createItemInput)
+	// ↑↑↑リクエストボディ↑↑↑
+
+	w := httptest.NewRecorder()
+	// Request, Path, Body
+	req, _ := http.NewRequest("PUT", "/items/2", bytes.NewBuffer(reqBody))
+	// ↓↓↓認証処理↓↓↓
+	req.Header.Set("Authorization", "Bearer "+*token)
+	// ↑↑↑認証処理↑↑↑
+
+	// テストの実行
+	router.ServeHTTP(w, req)
+	// レスポンスの検証
+	var res map[string]models.Item
+	json.Unmarshal(w.Body.Bytes(), &res)
+	// assertion
+	assert.Equal(t, http.StatusOK, w.Code)
+	assert.Equal(t, uint(2222), res["data"].Price)
+}
+
+func TestDelete(t *testing.T) {
+	// テストのセットアップ
+	router := setup()
+
+	// ↓↓↓認証処理↓↓↓
+	// 認証
+	token, err := services.CreateToken(2, "test2@example.com")
+	// エラー確認
+	assert.Equal(t, nil, err)
+	// ↑↑↑認証処理↑↑↑
+
+	w := httptest.NewRecorder()
+	// Request, Path, Body
+	req, _ := http.NewRequest("DELETE", "/items/3", nil)
+	// ↓↓↓認証処理↓↓↓
+	req.Header.Set("Authorization", "Bearer "+*token)
+	// ↑↑↑認証処理↑↑↑
+
+	// テストの実行
+	router.ServeHTTP(w, req)
+	// レスポンスの検証
+	var res map[string]models.Item
+	json.Unmarshal(w.Body.Bytes(), &res)
+	// assertion
+	assert.Equal(t, http.StatusOK, w.Code)
 }
